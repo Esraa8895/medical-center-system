@@ -35,3 +35,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/treatment-plans', \App\Livewire\TreatmentPlans\TreatmentPlanList::class);
     Route::get('/visits',          \App\Livewire\Visits\VisitList::class);
 });
+Route::middleware('auth')->group(function () {
+    Route::get('/',                \App\Livewire\Patients\PatientList::class);
+    Route::get('/patients',        \App\Livewire\Patients\PatientList::class);
+    Route::get('/treatment-plans', \App\Livewire\TreatmentPlans\TreatmentPlanList::class);
+    Route::get('/visits',          \App\Livewire\Visits\VisitList::class);
+    Route::get('/appointments',    \App\Livewire\Appointments\AppointmentList::class);
+    Route::get('/payments',        \App\Livewire\Payments\PaymentList::class);
+    Route::get('/reports',         \App\Livewire\Reports\ReportDashboard::class);
+});

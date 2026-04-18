@@ -11,15 +11,11 @@ Route::post('/login', function (Request $request) {
         'email'    => 'required|email',
         'password' => 'required',
     ]);
-
     if (Auth::attempt($credentials)) {
         $request->session()->regenerate();
         return redirect('/patients');
     }
-
-    return back()->withErrors([
-        'email' => 'البريد الإلكتروني أو كلمة المرور غير صحيحة',
-    ])->withInput();
+    return back()->withErrors(['email' => 'البريد أو كلمة المرور غير صحيحة'])->withInput();
 });
 
 Route::post('/logout', function () {
@@ -32,12 +28,7 @@ Route::post('/logout', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/',                \App\Livewire\Patients\PatientList::class);
     Route::get('/patients',        \App\Livewire\Patients\PatientList::class);
-    Route::get('/treatment-plans', \App\Livewire\TreatmentPlans\TreatmentPlanList::class);
-    Route::get('/visits',          \App\Livewire\Visits\VisitList::class);
-});
-Route::middleware('auth')->group(function () {
-    Route::get('/',                \App\Livewire\Patients\PatientList::class);
-    Route::get('/patients',        \App\Livewire\Patients\PatientList::class);
+    Route::get('/patients/{id}',   \App\Livewire\Patients\PatientProfile::class);
     Route::get('/treatment-plans', \App\Livewire\TreatmentPlans\TreatmentPlanList::class);
     Route::get('/visits',          \App\Livewire\Visits\VisitList::class);
     Route::get('/appointments',    \App\Livewire\Appointments\AppointmentList::class);

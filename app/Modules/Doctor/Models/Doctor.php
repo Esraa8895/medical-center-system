@@ -4,6 +4,7 @@ namespace App\Modules\Doctor\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Modules\Specialization\Models\Specialty;
+use App\Modules\Visit\Models\Visit;
 
 class Doctor extends Model
 {
@@ -19,5 +20,9 @@ class Doctor extends Model
     {
         return $this->belongsTo(Specialty::class);
     }
+    public function visits()
+{
+    return $this->hasMany(Visit::class);
+}
 }
 

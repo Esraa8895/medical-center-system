@@ -37,7 +37,7 @@
         </select>
 
         {{-- Active Filter Badge --}}
-        @if($specialtyId)
+        @if(!empty($specialtyId))
         <div class="flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium"
              style="background: #f5f0fa; color: #511269;">
             <span>تخصص: {{ $specialties->firstWhere('id', $specialtyId)?->name }}</span>

@@ -12,7 +12,7 @@ Route::middleware(['auth:sanctum', 'role:admin|receptionist'])->group(function (
         Route::post('/', [AppointmentController::class, 'store']);
         Route::put('/{id}', [AppointmentController::class, 'update']);
         Route::delete('/{id}', [AppointmentController::class, 'destroy']);
-
+        Route::get('/specialty/{specialtyId}', [AppointmentController::class, 'specialtyAppointments']);
     });
-      Route::get('doctors/{doctorId}/appointments', [AppointmentController::class, 'doctorAppointments']);
+
 });

@@ -103,24 +103,42 @@ class AppointmentService
         }
     }
 
-    public function getByDoctor(int $doctorId, string $search = '', ?string $date = null, int $perPage = 15)
+
+    public function getBySpecialty(int $specialtyId, string $search = '', ?string $date = null, int $perPage = 15)
 {
-    return Appointment::with(['patient', 'service'])
-        ->where('doctor_id', $doctorId)
-         ->when($date, function ($query) use ($date) {
-            $query->whereDate('appointment_date', $date);
+    return Appointment::query()
+        ->select(
+            'appointments.*',
+            'patients.name as patient_name',
+            'doctors.name as doctor_name',
+            'services.name as service_name',
+            'specialties.name as specialty_name'
+        )
+        ->join('patients', 'appointments.patient_id', '=', 'patients.id')
+        ->join('doctors', 'appointments.doctor_id', '=', 'doctors.id')
+        ->join('services', 'appointments.service_id', '=', 'services.id')
+        ->join('specialties', 'doctors.specialty_id', '=', 'specialties.id')
+
+        ->where('doctors.specialty_id', $specialtyId)
+
+        ->when($date, function ($query) use ($date) {
+            $query->whereDate('appointments.appointment_date', $date);
         })
+
         ->when($search, function ($query) use ($search) {
             $search = strtolower(trim($search));
 
             $query->where(function ($q) use ($search) {
-                $q->whereRaw('LOWER(type) LIKE ?', ["%{$search}%"])
-                  ->orWhereRaw('LOWER(status) LIKE ?', ["%{$search}%"])
-                  ->orWhereHas('patient', fn($q) => $q->whereRaw('LOWER(name) LIKE ?', ["%{$search}%"]))
-                  ->orWhereHas('service', fn($q) => $q->whereRaw('LOWER(name) LIKE ?', ["%{$search}%"]));
+                $q->whereRaw('LOWER(appointments.type) LIKE ?', ["%{$search}%"])
+                  ->orWhereRaw('LOWER(appointments.status) LIKE ?', ["%{$search}%"])
+                  ->orWhereRaw('LOWER(patients.name) LIKE ?', ["%{$search}%"])
+                  ->orWhereRaw('LOWER(doctors.name) LIKE ?', ["%{$search}%"])
+                  ->orWhereRaw('LOWER(services.name) LIKE ?', ["%{$search}%"])
+                  ->orWhereRaw('LOWER(specialties.name) LIKE ?', ["%{$search}%"]);
             });
         })
-        ->orderBy('appointment_date')
+
+        ->orderBy('appointments.appointment_date')
         ->paginate($perPage);
 }
 }

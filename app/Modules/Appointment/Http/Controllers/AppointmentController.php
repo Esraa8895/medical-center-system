@@ -31,21 +31,20 @@ class AppointmentController extends Controller
         ]);
     }
 
-    public function doctorAppointments($doctorId): JsonResponse
-    {
-        $appointments = $this->service->getByDoctor(
-            $doctorId,
-            request('search'),
-            request('date'),
-            request('per_page', 15)
-        );
+public function specialtyAppointments($specialtyId): JsonResponse
+{
+    $appointments = $this->service->getBySpecialty(
+        $specialtyId,
+        request('search'),
+        request('date'),
+        request('per_page', 15)
+    );
 
-        return response()->json([
-            'success' => true,
-            'data' => AppointmentResource::collection($appointments)
-        ]);
-    }
-
+    return response()->json([
+        'success' => true,
+        'data' => AppointmentResource::collection($appointments)
+    ]);
+}
     public function show($id): JsonResponse
     {
         $appointment = $this->service->getById($id);

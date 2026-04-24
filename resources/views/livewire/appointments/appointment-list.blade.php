@@ -90,7 +90,7 @@
                         <div class="flex flex-col items-center gap-2">
                             <span class="text-4xl">📅</span>
                             <p class="font-medium">لا توجد مواعيد
-                            @if($specialtyId || $search || $status) مطابقة للفلاتر المحددة @endif
+                            @if(!empty($specialtyId) || $search || $status) مطابقة للفلاتر المحددة @endif
                             </p>
                         </div>
                     </td>

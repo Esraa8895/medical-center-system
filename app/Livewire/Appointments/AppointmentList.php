@@ -12,11 +12,13 @@ class AppointmentList extends Component
 
     public string $search = '';
     public string $status = '';
-    public string $specialty = '';
+    public string $specialtyId = '';
 
     public function updatingSearch(): void { $this->resetPage(); }
     public function updatingStatus(): void { $this->resetPage(); }
-    public function updatingSpecialty(): void { $this->resetPage(); }
+    public function updatingSpecialtyId(): void { $this->resetPage();}
+
+
 
     public function render()
     {
@@ -36,7 +38,7 @@ class AppointmentList extends Component
             )
             ->when($this->search, fn($q) => $q->where('patients.name', 'like', "%{$this->search}%"))
             ->when($this->status, fn($q) => $q->where('appointments.status', $this->status))
-            ->when($this->specialty, fn($q) => $q->where('specialties.id', $this->specialty))
+            ->when($this->specialtyId, fn($q) =>$q->where('specialties.id', $this->specialtyId))
             ->orderByDesc('appointments.appointment_date')
             ->paginate(10);
 

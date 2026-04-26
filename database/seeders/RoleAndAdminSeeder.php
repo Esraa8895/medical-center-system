@@ -9,9 +9,6 @@ use Spatie\Permission\Models\Role;
 
 class RoleAndAdminSeeder extends Seeder
 {
-    /**
-     * Seed the application's roles and admin user.
-     */
     public function run(): void
     {
         $roles = [

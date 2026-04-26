@@ -3,6 +3,7 @@
 namespace App\Livewire\Users;
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Modules\Auth\Models\User;
 use App\Core\Enums\RoleEnum;
 use Spatie\Permission\Models\Role;
@@ -11,6 +12,8 @@ use Illuminate\Validation\Rules\Password;
 
 class UserList extends Component
 {
+    use WithPagination;
+
     // List
     public string $search = '';
 

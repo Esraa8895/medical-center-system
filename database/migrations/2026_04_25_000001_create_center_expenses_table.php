@@ -8,19 +8,21 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('center_expenses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('visit_id')->constrained('visits')->cascadeOnDelete();
-            $table->foreignId('patient_id')->constrained('patients')->cascadeOnDelete();
+            $table->string('title', 200);
             $table->decimal('amount', 14, 2);
+            $table->date('expense_date');
+            $table->enum('category', ['supplies', 'maintenance', 'other'])->default('supplies');
             $table->text('notes')->nullable();
+            $table->foreignId('created_by')->constrained('users');
             $table->timestamps();
-            $table->softDeletes(); // ← أرشفة
+            $table->softDeletes();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('center_expenses');
     }
 };

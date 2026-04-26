@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->decimal('discount', 12, 2)->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

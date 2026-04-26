@@ -26,6 +26,8 @@ Route::post('/logout', function () {
 })->name('logout');
 
 Route::middleware('auth')->group(function () {
+
+    // ── متاح للكل (Admin + Receptionist) ─────────────────
     Route::get('/',                \App\Livewire\Patients\PatientList::class);
     Route::get('/patients',        \App\Livewire\Patients\PatientList::class);
     Route::get('/patients/{id}',   \App\Livewire\Patients\PatientProfile::class);
@@ -33,5 +35,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/visits',          \App\Livewire\Visits\VisitList::class);
     Route::get('/appointments',    \App\Livewire\Appointments\AppointmentList::class);
     Route::get('/payments',        \App\Livewire\Payments\PaymentList::class);
-    Route::get('/reports',         \App\Livewire\Reports\ReportDashboard::class);
+
+    // ── Admin فقط ─────────────────────────────────────────
+    Route::middleware(\App\Http\Middleware\AdminMiddleware::class)->group(function () {
+        Route::get('/reports',  \App\Livewire\Reports\ReportDashboard::class);
+        Route::get('/users',    \App\Livewire\Users\UserList::class);
+        Route::get('/daily',    \App\Livewire\Admin\DailyView::class);
+        Route::get('/expenses', \App\Livewire\Admin\ExpenseList::class);
+    });
 });

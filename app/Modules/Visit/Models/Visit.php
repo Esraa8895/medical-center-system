@@ -3,9 +3,12 @@
 namespace App\Modules\Visit\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Visit extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'patient_id',
         'doctor_id',

@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('patients', function (Blueprint $table) {
@@ -18,12 +15,10 @@ return new class extends Migration
             $table->text('previous_diseases')->nullable();
             $table->string('phone', 20)->nullable();
             $table->timestamps();
+            $table->softDeletes(); // ← أرشفة بدل الحذف النهائي
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('patients');

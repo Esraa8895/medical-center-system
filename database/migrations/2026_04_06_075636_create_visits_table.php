@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('visits', function (Blueprint $table) {
@@ -20,12 +17,10 @@ return new class extends Migration
             $table->decimal('total_amount', 12, 2)->default(0);
             $table->decimal('paid_cost', 12, 2)->default(0);
             $table->timestamps();
+            $table->softDeletes(); // ← أرشفة
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('visits');

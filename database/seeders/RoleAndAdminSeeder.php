@@ -20,17 +20,16 @@ class RoleAndAdminSeeder extends Seeder
         ];
 
         foreach ($roles as $roleName) {
-            Role::firstOrCreate([
-                'name' => $roleName,
-                'guard_name' => 'api',
-            ]);
+            Role::firstOrCreate(
+                ['name' => $roleName, 'guard_name' => 'web'],
+            );
         }
 
         if (!User::where('email', 'admin@gmail.com')->exists()) {
             $admin = User::create([
-                'name' => 'Admin',
-                'email' => 'admin@gmail.com',
-                'password' => 'Admin1234!',
+                'name'     => 'Admin',
+                'email'    => 'admin@gmail.com',
+                'password' => bcrypt('Admin1234!'),
             ]);
 
             $admin->assignRole(RoleEnum::ADMIN->value);

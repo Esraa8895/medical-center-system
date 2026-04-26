@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Modules\TreatmentPlan\Models;
+namespace App\Modules\Appointment\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class TreatmentPlan extends Model
+class Appointment extends Model
 {
     use SoftDeletes;
 
@@ -13,17 +13,14 @@ class TreatmentPlan extends Model
         'patient_id',
         'doctor_id',
         'service_id',
-        'total_sessions',
-        'completed_sessions',
-        'expected_total',
+        'appointment_date',
+        'type',
         'status',
         'notes',
-        'discount',
     ];
 
     protected $casts = [
-        'expected_total' => 'decimal:2',
-        'discount'       => 'decimal:2',
+        'appointment_date' => 'datetime',
     ];
 
     public function patient()
@@ -39,10 +36,5 @@ class TreatmentPlan extends Model
     public function service()
     {
         return $this->belongsTo(\App\Modules\Service\Models\Service::class);
-    }
-
-    public function visits()
-    {
-        return $this->hasMany(\App\Modules\Visit\Models\Visit::class);
     }
 }

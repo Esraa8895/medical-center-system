@@ -24,63 +24,88 @@
             </div>
 
             <!-- Nav -->
-            <nav class="flex-1 px-3 py-4 space-y-1">
+            <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+
+                {{-- ── الكل ── --}}
+                @php
+                    $navLink = fn($path, $icon, $label) =>
+                        '<a href="/'.$path.'" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 '.
+                        (request()->is($path.'*') || ($path === 'patients' && (request()->is('/') || request()->is('patients*'))) ? 'text-white' : 'hover:text-white').'" '.
+                        'style="'.(request()->is($path.'*') || ($path === 'patients' && (request()->is('/') || request()->is('patients*'))) ? 'background: rgba(255,255,255,0.18);' : 'color: rgba(220,180,255,0.85);').'">'.
+                        '<span class="text-base">'.$icon.'</span><span>'.$label.'</span></a>';
+                @endphp
+
                 <a href="/patients"
                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150
                           {{ request()->is('patients*') || request()->is('/') ? 'text-white' : 'hover:text-white' }}"
-                   style="{{ request()->is('patients*') || request()->is('/') ? 'background: rgba(255,255,255,0.18);' : 'color: rgba(220,180,255,0.85);' }}
-                          {{ !request()->is('patients*') && !request()->is('/') ? '' : '' }}">
-                    <span class="text-base">👥</span>
-                    <span>المرضى</span>
+                   style="{{ request()->is('patients*') || request()->is('/') ? 'background: rgba(255,255,255,0.18);' : 'color: rgba(220,180,255,0.85);' }}">
+                    <span class="text-base">👥</span><span>المرضى</span>
                 </a>
+
                 <a href="/treatment-plans"
                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150
                           {{ request()->is('treatment-plans*') ? 'text-white' : 'hover:text-white' }}"
                    style="{{ request()->is('treatment-plans*') ? 'background: rgba(255,255,255,0.18);' : 'color: rgba(220,180,255,0.85);' }}">
-                    <span class="text-base">📋</span>
-                    <span>خطط العلاج</span>
+                    <span class="text-base">📋</span><span>خطط العلاج</span>
                 </a>
-                <a href="/visits"
-                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150
-                          {{ request()->is('visits*') ? 'text-white' : 'hover:text-white' }}"
-                   style="{{ request()->is('visits*') ? 'background: rgba(255,255,255,0.18);' : 'color: rgba(220,180,255,0.85);' }}">
-                    <span class="text-base">🏥</span>
-                    <span>الزيارات</span>
-                </a>
+
                 <a href="/appointments"
                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150
                           {{ request()->is('appointments*') ? 'text-white' : 'hover:text-white' }}"
                    style="{{ request()->is('appointments*') ? 'background: rgba(255,255,255,0.18);' : 'color: rgba(220,180,255,0.85);' }}">
-                    <span class="text-base">📅</span>
-                    <span>المواعيد</span>
+                    <span class="text-base">📅</span><span>المواعيد</span>
                 </a>
+
+                <a href="/visits"
+                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150
+                          {{ request()->is('visits*') ? 'text-white' : 'hover:text-white' }}"
+                   style="{{ request()->is('visits*') ? 'background: rgba(255,255,255,0.18);' : 'color: rgba(220,180,255,0.85);' }}">
+                    <span class="text-base">🏥</span><span>الزيارات</span>
+                </a>
+
                 <a href="/payments"
                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150
                           {{ request()->is('payments*') ? 'text-white' : 'hover:text-white' }}"
                    style="{{ request()->is('payments*') ? 'background: rgba(255,255,255,0.18);' : 'color: rgba(220,180,255,0.85);' }}">
-                    <span class="text-base">💰</span>
-                    <span>المدفوعات</span>
+                    <span class="text-base">💳</span><span>المدفوعات</span>
                 </a>
 
+                {{-- ── Admin فقط ── --}}
                 @if(auth()->user()?->hasRole('admin'))
                 <div class="pt-2 mt-2" style="border-top: 1px solid rgba(255,255,255,0.1);">
-                    <p class="px-3 pb-1 text-xs font-semibold uppercase tracking-wider" style="color: rgba(184,150,12,0.8);">إدارة</p>
+                    <p class="px-3 pb-1 text-xs font-semibold uppercase tracking-wider"
+                       style="color: rgba(184,150,12,0.8);">إدارة</p>
+
+                    <a href="/daily"
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150
+                              {{ request()->is('daily*') ? 'text-white' : 'hover:text-white' }}"
+                       style="{{ request()->is('daily*') ? 'background: rgba(255,255,255,0.18);' : 'color: rgba(220,180,255,0.85);' }}">
+                        <span class="text-base">📊</span><span>اليومية</span>
+                    </a>
+
                     <a href="/reports"
                        class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150
                               {{ request()->is('reports*') ? 'text-white' : 'hover:text-white' }}"
                        style="{{ request()->is('reports*') ? 'background: rgba(255,255,255,0.18);' : 'color: rgba(220,180,255,0.85);' }}">
-                        <span class="text-base">📊</span>
-                        <span>التقارير</span>
+                        <span class="text-base">📈</span><span>التقارير</span>
                     </a>
+
+                    <a href="/expenses"
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150
+                              {{ request()->is('expenses*') ? 'text-white' : 'hover:text-white' }}"
+                       style="{{ request()->is('expenses*') ? 'background: rgba(255,255,255,0.18);' : 'color: rgba(220,180,255,0.85);' }}">
+                        <span class="text-base">💰</span><span>تكاليف المركز</span>
+                    </a>
+
                     <a href="/users"
                        class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150
                               {{ request()->is('users*') ? 'text-white' : 'hover:text-white' }}"
                        style="{{ request()->is('users*') ? 'background: rgba(255,255,255,0.18);' : 'color: rgba(220,180,255,0.85);' }}">
-                        <span class="text-base">⚙️</span>
-                        <span>إدارة الحسابات</span>
+                        <span class="text-base">⚙️</span><span>إدارة الحسابات</span>
                     </a>
                 </div>
                 @endif
+
             </nav>
 
             <!-- User Info + Logout -->

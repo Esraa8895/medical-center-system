@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('visit_services', function (Blueprint $table) {
@@ -23,12 +20,10 @@ return new class extends Migration
             $table->decimal('doctor_share', 12, 2)->nullable();
             $table->decimal('clinic_share', 12, 2)->nullable();
             $table->timestamps();
+            $table->softDeletes(); // ← أرشفة
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('visit_services');

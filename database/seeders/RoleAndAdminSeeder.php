@@ -11,6 +11,7 @@ class RoleAndAdminSeeder extends Seeder
 {
     public function run(): void
     {
+        // ── إنشاء الأدوار ─────────────────────────────────────
         $roles = [
             RoleEnum::ADMIN->value,
             RoleEnum::RECEPTIONIST->value,
@@ -22,14 +23,28 @@ class RoleAndAdminSeeder extends Seeder
             );
         }
 
+        // ── حساب المدير (Admin) ────────────────────────────────
+        // البريد:    admin@gmail.com
+        // كلمة المرور: Admin1234!
         if (!User::where('email', 'admin@gmail.com')->exists()) {
             $admin = User::create([
-                'name'     => 'Admin',
+                'name'     => 'مدير النظام',
                 'email'    => 'admin@gmail.com',
                 'password' => bcrypt('Admin1234!'),
             ]);
-
             $admin->assignRole(RoleEnum::ADMIN->value);
+        }
+
+        // ── حساب الاستقبال (Receptionist) ─────────────────────
+        // البريد:    reception@gmail.com
+        // كلمة المرور: Reception1234!
+        if (!User::where('email', 'reception@gmail.com')->exists()) {
+            $receptionist = User::create([
+                'name'     => 'موظفة الاستقبال',
+                'email'    => 'reception@gmail.com',
+                'password' => bcrypt('Reception1234!'),
+            ]);
+            $receptionist->assignRole(RoleEnum::RECEPTIONIST->value);
         }
     }
 }

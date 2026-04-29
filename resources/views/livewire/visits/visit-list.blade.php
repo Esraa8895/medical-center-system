@@ -63,7 +63,9 @@
                     <td class="px-6 py-4 font-semibold text-gray-800">{{ number_format($visit->total_amount) }}</td>
                     <td class="px-6 py-4 font-semibold text-green-600">{{ number_format($visit->paid_cost) }}</td>
                     <td class="px-6 py-4">
-                        @if($visit->remaining > 0)
+                        @if($visit->total_amount <= 0)
+                        <span class="px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-500">لا يوجد</span>
+                        @elseif($visit->remaining > 0)
                         <span class="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-600">{{ number_format($visit->remaining) }}</span>
                         @else
                         <span class="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-600">مسدد ✅</span>

@@ -31,7 +31,7 @@ class PatientForm extends Component
     {
         return [
             'name'              => 'required|string|max:100',
-            'phone'             => 'nullable|string|max:20',
+            'phone'             => ['nullable', 'regex:/^(\+963|0)?9[0-9]{8}$/'],
             'age'               => 'nullable|integer|min:1|max:120',
             'previous_diseases' => 'nullable|string|max:1000',
         ];
@@ -43,6 +43,7 @@ class PatientForm extends Component
         'age.integer'   => 'العمر يجب أن يكون رقماً صحيحاً',
         'age.min'       => 'العمر يجب أن يكون أكبر من 0',
         'age.max'       => 'العمر يجب أن لا يتجاوز 120',
+        'phone.regex'   => 'رقم الهاتف يجب أن يكون رقماً سورياً صحيحاً (مثال: 0912345678)',
     ];
 
     public function save(): void

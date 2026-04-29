@@ -37,8 +37,10 @@ class DoctorService
 
     public function deleteDoctor(Doctor $doctor): void
     {
+        // soft delete — نحتفظ بالطبيب في قاعدة البيانات مع deleted_at
+        // في حال مرتبط بزيارات، نمنع الحذف لحماية البيانات التاريخية
         if ($doctor->visits()->exists()) {
-            throw new Exception("لا يمكن حذف الدكتور لأنه مرتبط ببيانات");
+            throw new Exception("لا يمكن حذف الطبيب لأنه مرتبط بزيارات مسجّلة، يمكن أرشفته بدلاً من ذلك");
         }
 
         $doctor->delete();

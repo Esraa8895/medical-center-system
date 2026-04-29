@@ -27,19 +27,18 @@
             <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
 
                 {{-- ── الكل ── --}}
-                @php
-                    $navLink = fn($path, $icon, $label) =>
-                        '<a href="/'.$path.'" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 '.
-                        (request()->is($path.'*') || ($path === 'patients' && (request()->is('/') || request()->is('patients*'))) ? 'text-white' : 'hover:text-white').'" '.
-                        'style="'.(request()->is($path.'*') || ($path === 'patients' && (request()->is('/') || request()->is('patients*'))) ? 'background: rgba(255,255,255,0.18);' : 'color: rgba(220,180,255,0.85);').'">'.
-                        '<span class="text-base">'.$icon.'</span><span>'.$label.'</span></a>';
-                @endphp
-
                 <a href="/patients"
                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150
                           {{ request()->is('patients*') || request()->is('/') ? 'text-white' : 'hover:text-white' }}"
                    style="{{ request()->is('patients*') || request()->is('/') ? 'background: rgba(255,255,255,0.18);' : 'color: rgba(220,180,255,0.85);' }}">
                     <span class="text-base">👥</span><span>المرضى</span>
+                </a>
+
+                <a href="/doctors"
+                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150
+                          {{ request()->is('doctors*') ? 'text-white' : 'hover:text-white' }}"
+                   style="{{ request()->is('doctors*') ? 'background: rgba(255,255,255,0.18);' : 'color: rgba(220,180,255,0.85);' }}">
+                    <span class="text-base">👨‍⚕️</span><span>الأطباء</span>
                 </a>
 
                 <a href="/treatment-plans"

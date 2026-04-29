@@ -14,7 +14,7 @@ class AppointmentList extends Component
     // ── Filters ───────────────────────────────────────────
     public string $search    = '';
     public string $status    = '';
-    public string $specialty = '';   // ← الاسم الصحيح (كان specialty في PHP وspecialtyId في blade — الآن متطابقان)
+    public string $specialty = '';
 
     // ── Modal إضافة موعد ──────────────────────────────────
     public bool   $showModal        = false;
@@ -35,11 +35,17 @@ class AppointmentList extends Component
     public function updatingStatus():    void { $this->resetPage(); }
     public function updatingSpecialty(): void { $this->resetPage(); }
 
+    // عند تغيير الطبيب — reset الخدمة لأن كل طبيب له تخصص مختلف
+    public function updatedModalDoctorId(): void
+    {
+        $this->modalServiceId = null;
+    }
+
     // ── فتح/إغلاق modal الإضافة ──────────────────────────
     public function openModal(): void
     {
         $this->resetModal();
-        $this->appointmentDate = now()->format('Y-m-d\TH:i');
+        $this->appointmentDate = now()->addHour()->format('Y-m-d\TH:i');
         $this->showModal = true;
     }
 
@@ -68,12 +74,13 @@ class AppointmentList extends Component
             'selectedPatient' => 'required|exists:patients,id',
             'modalDoctorId'   => 'required|exists:doctors,id',
             'modalServiceId'  => 'required|exists:services,id',
-            'appointmentDate' => 'required|date',
+            'appointmentDate' => 'required|date|after:now',
         ], [
             'selectedPatient.required' => 'اختاري المريضة',
             'modalDoctorId.required'   => 'اختاري الطبيب',
             'modalServiceId.required'  => 'اختاري الخدمة',
             'appointmentDate.required' => 'حددي تاريخ الموعد',
+            'appointmentDate.after'    => 'تاريخ الموعد يجب أن يكون بعد الوقت الحالي',
         ]);
 
         DB::table('appointments')->insert([
@@ -116,10 +123,9 @@ class AppointmentList extends Component
         $this->editStatusId    = null;
     }
 
-    // ── حذف موعد ─────────────────────────────────────────
+    // ── حذف موعد (soft delete) ────────────────────────────
     public function deleteAppointment(int $id): void
     {
-        // soft delete — يُخفى من الواجهة ويبقى بالـ DB مع deleted_at
         Appointment::findOrFail($id)->delete();
         session()->flash('success', 'تم أرشفة الموعد');
     }
@@ -129,26 +135,34 @@ class AppointmentList extends Component
     {
         $specialties = DB::table('specialties')->orderBy('name')->get();
 
-        // قائمة الأطباء للـ modal
         $doctors = DB::table('doctors')
             ->join('specialties', 'doctors.specialty_id', '=', 'specialties.id')
-            ->select('doctors.id', 'doctors.name', 'specialties.name as specialty_name')
+            ->whereNull('doctors.deleted_at')
+            ->select('doctors.id', 'doctors.name', 'doctors.specialty_id', 'specialties.name as specialty_name')
             ->orderBy('doctors.name')
             ->get();
 
-        // قائمة الخدمات للـ modal
-        $services = DB::table('services')->orderBy('name')->get();
+        // فلترة الخدمات حسب تخصص الطبيب المختار
+        $services = $this->modalDoctorId
+            ? DB::table('services')
+                ->join('doctors', 'services.specialty_id', '=', 'doctors.specialty_id')
+                ->where('doctors.id', $this->modalDoctorId)
+                ->select('services.id', 'services.name', 'services.price')
+                ->orderBy('services.name')
+                ->get()
+            : collect();
 
-        // البحث عن مريضة في الـ modal
         $patientResults = $this->patientSearch
             ? DB::table('patients')
-                ->where('name', 'like', "%{$this->patientSearch}%")
-                ->orWhere('phone', 'like', "%{$this->patientSearch}%")
+                ->whereNull('deleted_at')
+                ->where(function($q) {
+                    $q->where('name', 'like', "%{$this->patientSearch}%")
+                      ->orWhere('phone', 'like', "%{$this->patientSearch}%");
+                })
                 ->limit(8)
                 ->get()
             : collect();
 
-        // المريضة المختارة
         $selectedPatientName = $this->selectedPatient
             ? DB::table('patients')->where('id', $this->selectedPatient)->value('name')
             : null;
@@ -158,6 +172,7 @@ class AppointmentList extends Component
             ->join('doctors',     'appointments.doctor_id',  '=', 'doctors.id')
             ->join('services',    'appointments.service_id', '=', 'services.id')
             ->join('specialties', 'doctors.specialty_id',    '=', 'specialties.id')
+            ->whereNull('appointments.deleted_at')
             ->select(
                 'appointments.*',
                 'patients.name  as patient_name',

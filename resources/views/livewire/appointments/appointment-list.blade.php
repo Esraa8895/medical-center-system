@@ -139,26 +139,36 @@
                 @endif
             </div>
 
-            {{-- طبيب وخدمة --}}
-            <div class="grid grid-cols-2 gap-3 mb-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">الطبيب <span class="text-red-500">*</span></label>
-                    <select wire:model="modalDoctorId" class="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2">
-                        <option value="">اختاري...</option>
-                        @foreach($doctors as $doc)
-                        <option value="{{ $doc->id }}">{{ $doc->name }} — {{ $doc->specialty_name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">الخدمة <span class="text-red-500">*</span></label>
+            {{-- طبيب --}}
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">الطبيب <span class="text-red-500">*</span></label>
+                <select wire:model.live="modalDoctorId" class="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2">
+                    <option value="">اختاري الطبيب أولاً...</option>
+                    @foreach($doctors as $doc)
+                    <option value="{{ $doc->id }}">{{ $doc->name }} — {{ $doc->specialty_name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            {{-- خدمة - تظهر فقط بعد اختيار الطبيب --}}
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">الخدمة <span class="text-red-500">*</span></label>
+                @if(!$modalDoctorId)
+                    <div class="w-full border border-gray-100 rounded-xl px-3 py-2.5 text-sm text-gray-400 bg-gray-50">
+                        اختاري الطبيب أولاً لرؤية خدماته
+                    </div>
+                @elseif($services->isEmpty())
+                    <div class="w-full border border-orange-200 rounded-xl px-3 py-2.5 text-sm text-orange-600 bg-orange-50">
+                        لا توجد خدمات لتخصص هذا الطبيب
+                    </div>
+                @else
                     <select wire:model="modalServiceId" class="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2">
-                        <option value="">اختاري...</option>
+                        <option value="">اختاري الخدمة...</option>
                         @foreach($services as $svc)
                         <option value="{{ $svc->id }}">{{ $svc->name }}</option>
                         @endforeach
                     </select>
-                </div>
+                @endif
             </div>
 
             {{-- تاريخ ونوع --}}
@@ -166,7 +176,9 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">التاريخ والوقت <span class="text-red-500">*</span></label>
                     <input wire:model="appointmentDate" type="datetime-local"
+                           min="{{ now()->format('Y-m-d\TH:i') }}"
                            class="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2">
+                    <p class="text-xs text-gray-400 mt-1">يجب أن يكون بعد الوقت الحالي</p>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">النوع</label>
@@ -203,7 +215,7 @@
 
     {{-- Modal تعديل الحالة --}}
     @if($showStatusModal)
-    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50" wire:click.self="closeStatusModal">
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50" wire:click.self="$set('showStatusModal', false)">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm mx-4 p-6" dir="rtl">
             <div class="flex items-center justify-between mb-5">
                 <h3 class="text-lg font-bold text-gray-800">تعديل حالة الموعد</h3>

@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/visits',          \App\Livewire\Visits\VisitList::class);
     Route::get('/appointments',    \App\Livewire\Appointments\AppointmentList::class);
     Route::get('/payments',        \App\Livewire\Payments\PaymentList::class);
+    Route::get('/doctors',         \App\Livewire\Doctors\DoctorList::class);
 
     // ── Admin فقط ─────────────────────────────────────────
     Route::middleware(\App\Http\Middleware\AdminMiddleware::class)->group(function () {

@@ -14,7 +14,8 @@ class UpdatePatientRequest extends FormRequest
             'name'              => 'sometimes|required|string|max:100',
             'phone'             => ['nullable', 'regex:/^(\+963|0)?9[0-9]{8}$/'],
             'age'               => 'nullable|integer|min:0|max:150',
-            'previous_diseases' => 'nullable|string',
+            'address'           => 'nullable|string|max:255',
+            'notes'             => 'nullable|string',
         ];
     }
 

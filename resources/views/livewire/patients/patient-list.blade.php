@@ -36,7 +36,8 @@
                     <th class="px-6 py-4 font-semibold text-gray-600">الاسم</th>
                     <th class="px-6 py-4 font-semibold text-gray-600">الهاتف</th>
                     <th class="px-6 py-4 font-semibold text-gray-600">العمر</th>
-                    <th class="px-6 py-4 font-semibold text-gray-600">الأمراض السابقة</th>
+                    <th class="px-6 py-4 font-semibold text-gray-600">العنوان</th>
+                    <th class="px-6 py-4 font-semibold text-gray-600">الملاحظات</th>
                     <th class="px-6 py-4 font-semibold text-gray-600">الإجراءات</th>
                 </tr>
             </thead>
@@ -47,7 +48,8 @@
                     <td class="px-6 py-4 font-medium text-gray-800">{{ $patient->name }}</td>
                     <td class="px-6 py-4 text-gray-600">{{ $patient->phone ?? '—' }}</td>
                     <td class="px-6 py-4 text-gray-600">{{ $patient->age ?? '—' }}</td>
-                    <td class="px-6 py-4 text-gray-500 text-xs">{{ Str::limit($patient->previous_diseases ?? '', 30) }}</td>
+                    <td class="px-6 py-4 text-gray-500 text-xs">{{ Str::limit($patient->address ?? '', 30) }}</td>
+                    <td class="px-6 py-4 text-gray-500 text-xs">{{ Str::limit($patient->notes ?? '', 30) }}</td>
                     <td class="px-6 py-4">
                         <div class="flex items-center gap-2 justify-end flex-wrap">
                             <a href="/patients/{{ $patient->id }}"

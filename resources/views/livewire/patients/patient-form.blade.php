@@ -39,13 +39,22 @@
             @error('age')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
         </div>
 
+        {{-- العنوان --}}
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-1">العنوان</label>
+            <input wire:model="address" type="text" placeholder="عنوان المريضة..."
+                   class="w-full border rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2
+                          @error('address') border-red-300 focus:ring-red-200 @else border-gray-200 @enderror">
+            @error('address')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
+        </div>
+
         {{-- الأمراض السابقة --}}
         <div class="mb-5">
-            <label class="block text-sm font-medium text-gray-700 mb-1">الأمراض السابقة</label>
-            <textarea wire:model="previous_diseases" rows="3" placeholder="الأمراض السابقة أو الحالة الصحية العامة..."
+            <label class="block text-sm font-medium text-gray-700 mb-1">الملاحظات</label>
+            <textarea wire:model="notes" rows="3" placeholder="الملاحظات..."
                       class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 resize-none
-                             @error('previous_diseases') border-red-300 @enderror"></textarea>
-            @error('previous_diseases')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
+                             @error('notes') border-red-300 @enderror"></textarea>
+            @error('notes')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
         </div>
 
         <div class="flex gap-3">

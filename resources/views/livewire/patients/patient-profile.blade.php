@@ -23,8 +23,11 @@
                     <span>🎂 {{ $patient->age }} سنة</span>
                     @endif
                 </div>
-                @if($patient->previous_diseases)
-                <p class="text-purple-200 text-xs mt-1">الأمراض السابقة: {{ $patient->previous_diseases }}</p>
+                @if($patient->address)
+                <p class="text-purple-200 text-xs mt-1">العنوان: {{ $patient->address }}</p>
+                @endif
+                @if($patient->notes)
+                <p class="text-purple-200 text-xs mt-1">الملاحظات: {{ $patient->notes }}</p>
                 @endif
             </div>
         </div>

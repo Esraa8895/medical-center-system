@@ -44,7 +44,7 @@ class DailyView extends Component
                 'doctors.name                                                 as doctor_name',
                 'specialties.name                                             as specialty_name',
                 DB::raw('visit_services.price - visit_services.discount       as total'),
-                DB::raw('COALESCE(p.paid, 0)                                  as paid'),
+                DB::raw('COALESCE(p.paid, 0) as paid'),
                 DB::raw('(visit_services.price - visit_services.discount)
                          - COALESCE(p.paid, 0)                                as remaining'),
                 'visit_services.discount',

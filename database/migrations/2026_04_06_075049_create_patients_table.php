@@ -12,7 +12,8 @@ return new class extends Migration
             $table->id();
             $table->string('name', 100);
             $table->integer('age')->nullable();
-            $table->text('previous_diseases')->nullable();
+            $table->string('address', 255)->nullable();
+            $table->text('notes')->nullable();
             $table->string('phone', 20)->nullable();
             $table->timestamps();
             $table->softDeletes(); // ← أرشفة بدل الحذف النهائي

@@ -135,7 +135,6 @@
                         @foreach($openVisits as $v)
                         <option value="{{ $v->id }}">
                             {{ $v->patient_name }} — {{ $v->doctor_name }}
-                            (متبقي: {{ number_format($v->remaining) }} ل.س)
                         </option>
                         @endforeach
                     </select>
@@ -159,7 +158,7 @@
                 {{-- المبلغ --}}
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1.5">
-                        المبلغ المدفوع (ل.س) <span class="text-red-500">*</span>
+                        المبلغ المطلوب (ل.س) <span class="text-red-500">*</span>
                     </label>
                     <input wire:model="amount"
                            type="number" min="0" step="any"

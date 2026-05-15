@@ -12,8 +12,9 @@ class PatientResource extends JsonResource
             'id'                => $this->id,
             'name'              => $this->name,
             'phone'             => $this->phone,
+            'address'           => $this->address,
             'age'               => $this->age,
-            'previous_diseases' => $this->previous_diseases,
+            'notes'             => $this->notes,
             'created_at'        => $this->created_at->format('Y-m-d H:i'),
         ];
     }

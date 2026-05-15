@@ -11,7 +11,7 @@ class SpecialtyAndServiceSeeder extends Seeder
     {
         $specialties = [
             [
-                'name'     => 'طب الأسنان العام',
+                'name'     => 'أسنان',
                 'services' => [
                     ['name' => 'كشف وفحص أسنان', 'price' => 5000],
                     ['name' => 'تنظيف الأسنان', 'price' => 15000],
@@ -23,7 +23,7 @@ class SpecialtyAndServiceSeeder extends Seeder
                 ],
             ],
             [
-                'name'     => 'تقويم الأسنان',
+                'name'     => 'جلدية',
                 'services' => [
                     ['name' => 'كشف تقويم', 'price' => 10000],
                     ['name' => 'تركيب تقويم ثابت', 'price' => 300000],
@@ -33,7 +33,7 @@ class SpecialtyAndServiceSeeder extends Seeder
                 ],
             ],
             [
-                'name'     => 'طب أسنان الأطفال',
+                'name'     => 'نسائية',
                 'services' => [
                     ['name' => 'كشف أطفال', 'price' => 5000],
                     ['name' => 'حشو حليبي', 'price' => 15000],
@@ -41,47 +41,9 @@ class SpecialtyAndServiceSeeder extends Seeder
                     ['name' => 'فلورايد', 'price' => 10000],
                     ['name' => 'سيلانت (طلاء وقائي)', 'price' => 15000],
                 ],
-            ],
-            [
-                'name'     => 'جراحة الفم والوجه',
-                'services' => [
-                    ['name' => 'كشف جراحي', 'price' => 10000],
-                    ['name' => 'استئصال كيس', 'price' => 100000],
-                    ['name' => 'زراعة سن (implant)', 'price' => 600000],
-                    ['name' => 'رفع جيب جيبي', 'price' => 120000],
-                ],
-            ],
-            [
-                'name'     => 'طب اللثة',
-                'services' => [
-                    ['name' => 'كشف لثة', 'price' => 5000],
-                    ['name' => 'علاج التهاب اللثة', 'price' => 30000],
-                    ['name' => 'كيور لثة', 'price' => 60000],
-                    ['name' => 'جراحة لثة', 'price' => 150000],
-                ],
-            ],
-            [
-                'name'     => 'تركيبات وتيجان',
-                'services' => [
-                    ['name' => 'كشف تركيبات', 'price' => 5000],
-                    ['name' => 'تاج زيركون', 'price' => 120000],
-                    ['name' => 'تاج معدني خزفي', 'price' => 80000],
-                    ['name' => 'طقم أسنان كامل', 'price' => 250000],
-                    ['name' => 'جسر ثلاثي', 'price' => 220000],
-                    ['name' => 'فينير', 'price' => 100000],
-                ],
-            ],
-            [
-                'name'     => 'علاج جذور (أعصاب)',
-                'services' => [
-                    ['name' => 'كشف عصب', 'price' => 5000],
-                    ['name' => 'معالجة لبية (ضرس أمامي)', 'price' => 40000],
-                    ['name' => 'معالجة لبية (ضرس خلفي)', 'price' => 70000],
-                    ['name' => 'إعادة معالجة لبية', 'price' => 90000],
-                ],
-            ],
+            ]
         ];
-
+        
         foreach ($specialties as $specialtyData) {
             $services = $specialtyData['services'];
             unset($specialtyData['services']);

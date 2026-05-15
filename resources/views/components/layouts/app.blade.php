@@ -41,12 +41,12 @@
                     <span class="text-base">👨‍⚕️</span><span>الأطباء</span>
                 </a>
 
-                <a href="/treatment-plans"
+                {{-- <a href="/treatment-plans"
                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150
                           {{ request()->is('treatment-plans*') ? 'text-white' : 'hover:text-white' }}"
                    style="{{ request()->is('treatment-plans*') ? 'background: rgba(255,255,255,0.18);' : 'color: rgba(220,180,255,0.85);' }}">
                     <span class="text-base">📋</span><span>خطط العلاج</span>
-                </a>
+                </a> --}}
 
                 <a href="/appointments"
                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150
@@ -94,6 +94,13 @@
                               {{ request()->is('expenses*') ? 'text-white' : 'hover:text-white' }}"
                        style="{{ request()->is('expenses*') ? 'background: rgba(255,255,255,0.18);' : 'color: rgba(220,180,255,0.85);' }}">
                         <span class="text-base">💰</span><span>تكاليف المركز</span>
+                    </a>
+
+                     <a href="/archive"
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150
+                              {{ request()->is('archive*') ? 'text-white' : 'hover:text-white' }}"
+                       style="{{ request()->is('archive*') ? 'background: rgba(255,255,255,0.18);' : 'color: rgba(220,180,255,0.85);' }}">
+                        <span class="text-base">🗄</span><span>الأرشيف</span>
                     </a>
 
                     <a href="/users"

@@ -12,7 +12,8 @@ class PatientForm extends Component
     public string $name               = '';
     public string $phone              = '';
     public string $age                = '';
-    public string $previous_diseases  = '';
+    public string $address            = '';
+    public string $notes              = '';
 
     public function mount(?int $patientId = null): void
     {
@@ -23,7 +24,8 @@ class PatientForm extends Component
             $this->name              = $patient->name;
             $this->phone             = $patient->phone ?? '';
             $this->age               = (string)($patient->age ?? '');
-            $this->previous_diseases = $patient->previous_diseases ?? '';
+            $this->address           = $patient->address ?? '';
+            $this->notes             = $patient->notes ?? '';
         }
     }
 
@@ -33,7 +35,8 @@ class PatientForm extends Component
             'name'              => 'required|string|max:100',
             'phone'             => ['nullable', 'regex:/^(\+963|0)?9[0-9]{8}$/'],
             'age'               => 'nullable|integer|min:1|max:120',
-            'previous_diseases' => 'nullable|string|max:1000',
+            'address'           => 'nullable|string|max:255',
+            'notes'             => 'nullable|string',
         ];
     }
 

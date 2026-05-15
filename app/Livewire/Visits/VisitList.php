@@ -83,7 +83,7 @@ class VisitList extends Component
     public function deleteVisit(int $id): void
     {
         // soft delete — يُخفى من الواجهة ويبقى بالـ DB مع deleted_at
-        Visit::findOrFail($id)->delete();
+        Visit::withTrashed()->findOrFail($id)->delete();
         session()->flash('success', 'تم أرشفة الزيارة');
     }
 
@@ -206,7 +206,7 @@ class VisitList extends Component
             : null;
 
         // الزيارات
-        $visits = DB::table('visits')
+        $visits = Visit::query()
             ->join('patients', 'visits.patient_id', '=', 'patients.id')
             ->join('doctors',  'visits.doctor_id',  '=', 'doctors.id')
             ->join('specialties', 'doctors.specialty_id', '=', 'specialties.id')

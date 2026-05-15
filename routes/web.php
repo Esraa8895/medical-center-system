@@ -1,5 +1,10 @@
 <?php
 
+use App\Livewire\Archive\ArchivedAppointments;
+use App\Livewire\Archive\ArchiveDashboard;
+use App\Livewire\Archive\ArchivedPatients;
+use App\Livewire\Archive\ArchivedPayments;
+use App\Livewire\Archive\ArchivedVisits;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -44,4 +49,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/daily',    \App\Livewire\Admin\DailyView::class);
         Route::get('/expenses', \App\Livewire\Admin\ExpenseList::class);
     });
+
+    Route::middleware(\App\Http\Middleware\AdminMiddleware::class)->group(function () {
+
+    Route::get('/archive', ArchiveDashboard::class);
+    Route::get('/archive/patients', ArchivedPatients::class);
+    Route::get('/archive/appointments', ArchivedAppointments::class);
+    Route::get('/archive/visits', ArchivedVisits::class);
+    Route::get('/archive/payments', ArchivedPayments::class);
+});
 });

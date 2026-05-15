@@ -16,24 +16,19 @@ class DoctorSeeder extends Seeder
 
         $doctors = [
             [
-                'name'               => 'د. أحمد الشهاب',
-                'specialty_name'     => 'طب الأسنان العام',
+                'name'               => 'د. ملاك ',
+                'specialty_name'     => 'جلدية',
                 'default_percentage' => 60,
             ],
             [
-                'name'               => 'د. سارة النور',
-                'specialty_name'     => 'تقويم الأسنان',
+                'name'               => 'د. هدى',
+                'specialty_name'     => 'نسائية',
                 'default_percentage' => 65,
             ],
             [
-                'name'               => 'د. محمد علي',
-                'specialty_name'     => 'جراحة الفم والوجه',
+                'name'               => 'د. دعاء شهاب ',
+                'specialty_name'     => 'أسنان',
                 'default_percentage' => 70,
-            ],
-            [
-                'name'               => 'د. ريم خالد',
-                'specialty_name'     => 'طب أسنان الأطفال',
-                'default_percentage' => 60,
             ],
         ];
 
